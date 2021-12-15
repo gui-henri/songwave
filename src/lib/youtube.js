@@ -1,7 +1,18 @@
 const fs = require('fs');
-const InnerTube = require('youtubei')
+const InnerTube = require('youtubei.js')
 
 const SEARCH_SIZE = 4;
+
+async function search(query) {
+    const youtube = await new InnerTube();
+
+        const search = await youtube.search(query);
+    
+        const videos = search.videos;
+    
+        videos.length = SEARCH_SIZE;
+        return videos;
+}
 
 module.exports = {
     search: async (query) =>  {
@@ -48,3 +59,5 @@ module.exports = {
         stream.on('error', (err) => console.error('[ERROR]', err));
     }
 }
+
+// search('the hardest part');

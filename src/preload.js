@@ -1,5 +1,4 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const yt = require('./lib/youtube');
 
 contextBridge.exposeInMainWorld(
     "api", {
@@ -9,6 +8,6 @@ contextBridge.exposeInMainWorld(
         close: () => {
             ipcRenderer.send('close');
         },
-        search: (query) => yt.search(query)
+        search: (query) => ipcRenderer.invoke('search', query)
     }
 );

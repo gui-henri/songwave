@@ -96,6 +96,8 @@ body {
 #main-container {
   display: flex;
   justify-content: space-between;
+  min-height: 460px;
+  max-height: 460px;
 }
 
 #playlist-container{

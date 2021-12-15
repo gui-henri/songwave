@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const yt = require('./lib/youtube');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -61,3 +62,8 @@ ipcMain.on('minimize', () => {
 ipcMain.on('close', () => {
   app.quit();
 });
+
+ipcMain.handle('search', async (event, query) => {
+  const searchResult = await yt.search(query);
+  return searchResult;
+})

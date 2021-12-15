@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "yt": "node src/lib/youtube.js"
   },
   "keywords": [],
   "author": {
@@ -46,7 +47,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "youtubei": "^0.0.1-rc.27"
+    "youtubei.js": "^1.2.7"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
