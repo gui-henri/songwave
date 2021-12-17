@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const InnerTube = require('youtubei.js')
 
 const SEARCH_SIZE = 4;
@@ -26,6 +27,7 @@ module.exports = {
     
         return videos;
     },
+    
     download: async (videoId, videoTitle) => {
         const youtube = await new InnerTube();
 
@@ -33,7 +35,11 @@ module.exports = {
             type: 'audio'
         });
 
-        stream.pipe(fs.createWriteStream(`./${videoTitle}.mp4`));
+        videoFileName = './' + videoTitle + '.mp4';
+
+        videoPath = path.join('.cache', videoFileName);
+
+        stream.pipe(fs.createWriteStream(videoPath));
 
         stream.on('start', () => {
             console.info('[DOWNLOADER]', 'Starting download now!');
@@ -43,16 +49,8 @@ module.exports = {
         // { video_details: {..}, selected_format: {..}, formats: {..} }
             console.info('[DOWNLOADER]', `Downloading ${info.video_details.title} by ${info.video_details.metadata.channel_name}`);
         });
-        
-        stream.on('progress', (info) => {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
-            process.stdout.write(`[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`);
-        });
-        
+          
         stream.on('end', () => {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
             console.info('[DOWNLOADER]', 'Done!');
         });
         

@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld(
         close: () => {
             ipcRenderer.send('close');
         },
-        search: (query) => ipcRenderer.invoke('search', query)
+        search: (query) => ipcRenderer.invoke('search', query),
+        download: (downloadArgs) => ipcRenderer.invoke('download', downloadArgs) 
     }
 );

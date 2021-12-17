@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const yt = require('./lib/youtube');
+const { create } = require('combined-stream');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -9,7 +11,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 let mainWindow;
 
-const createWindow = () => {
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1024,
@@ -30,10 +32,24 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 
+function initialize() {
+  const mainDir = path.join('.cache');
+  if (!fs.existsSync(mainDir)) {
+    fs.mkdir(mainDir, (err) => {
+      if (err) {
+        return console.error(err);
+      }
+    });
+  }
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  initialize();
+  createWindow();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -66,4 +82,9 @@ ipcMain.on('close', () => {
 ipcMain.handle('search', async (event, query) => {
   const searchResult = await yt.search(query);
   return searchResult;
-})
+});
+
+ipcMain.handle('download', async (event, downloadArgs) => {
+  console.log('got called!');
+  await yt.download(downloadArgs.videoId, downloadArgs.videoTitle)
+});
