@@ -35,26 +35,30 @@ module.exports = {
             type: 'audio'
         });
 
+        //treating the file path
         videoFileName = './' + videoTitle + '.mp4';
-
         videoPath = path.join('.cache', videoFileName);
 
-        stream.pipe(fs.createWriteStream(videoPath));
+        //verifying if the file exists
+        if (!fs.existsSync(videoPath)) {
+            //creating the file
+            stream.pipe(fs.createWriteStream(videoPath));
 
-        stream.on('start', () => {
-            console.info('[DOWNLOADER]', 'Starting download now!');
-        });
-        
-        stream.on('info', (info) => {
-        // { video_details: {..}, selected_format: {..}, formats: {..} }
-            console.info('[DOWNLOADER]', `Downloading ${info.video_details.title} by ${info.video_details.metadata.channel_name}`);
-        });
-          
-        stream.on('end', () => {
-            console.info('[DOWNLOADER]', 'Done!');
-        });
-        
-        stream.on('error', (err) => console.error('[ERROR]', err));
+            //log system
+            stream.on('start', () => {
+                console.info('[DOWNLOADER]', 'Starting download now!');
+            });
+            
+            stream.on('info', (info) => {
+                console.info('[DOWNLOADER]', `Downloading ${info.video_details.title} by ${info.video_details.metadata.channel_name}`);
+            });
+            
+            stream.on('end', () => {
+                console.info('[DOWNLOADER]', 'Done!');
+            });
+            
+            stream.on('error', (err) => console.error('[ERROR]', err));
+        }
     }
 }
 

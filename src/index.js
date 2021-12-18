@@ -85,6 +85,5 @@ ipcMain.handle('search', async (event, query) => {
 });
 
 ipcMain.handle('download', async (event, downloadArgs) => {
-  console.log('got called!');
   await yt.download(downloadArgs.videoId, downloadArgs.treatedTitle)
 });
