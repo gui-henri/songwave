@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld(
             ipcRenderer.send('close');
         },
         search: (query) => ipcRenderer.invoke('search', query),
-        download: (downloadArgs) => ipcRenderer.invoke('download', downloadArgs) 
+        download: (downloadArgs) => ipcRenderer.invoke('download', downloadArgs),
+        getMusics: (args) => ipcRenderer.invoke('getMusics', args)
     }
 );

@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const yt = require('./lib/youtube');
-const { create } = require('combined-stream');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -86,4 +85,9 @@ ipcMain.handle('search', async (event, query) => {
 
 ipcMain.handle('download', async (event, downloadArgs) => {
   await yt.download(downloadArgs.videoId, downloadArgs.treatedTitle)
+});
+
+ipcMain.handle('getMusics', (event, args) => {
+  const musicList = fs.readdirSync('./.cache/');
+  return musicList;
 });

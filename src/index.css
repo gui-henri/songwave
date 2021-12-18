@@ -71,9 +71,19 @@ body {
 }
 /* SEARCH ITEM RELATED STYLES */
 #search-item{
-  margin: 25px;
+  padding: 14px;
   display: flex;
+  transition-duration: 0.4s;
+  width: 700px;
 }
+
+#search-item:hover{
+  cursor: pointer;
+  transition-duration: 0.2s;
+  background-color: rgb(250, 226, 204);
+  border-radius: 15px;
+}
+
 
 #search-item img{
   max-width: 150px;
@@ -100,7 +110,65 @@ body {
   max-height: 460px;
 }
 
+#search-result-container{
+  width: 100%;
+  margin-top: 10px;
+}
+
 #playlist-container{
   border-left: 1px solid coral;
   min-width: 275px;
+  max-height: 460px;
+  overflow: auto;
+}
+
+#playlist-container h3 {
+  align-self: center;
+  justify-self: center;
+  color: coral;
+  margin-left: 15px;
+  border-bottom: 1px solid coral;
+}
+
+#music-in-playlist{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+#music-in-playlist h4 {
+  margin-left: 20px;
+  border-bottom: 1px solid coral;
+}
+
+#music-in-playlist h4:hover {
+  cursor: pointer;
+}
+
+#music-in-playlist img{
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+#music-in-playlist img:hover {
+  cursor: pointer;
+}
+
+#audio-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 40px;
+  padding-right: 40px;
+  height: 75px;
+}
+
+#audio-player audio {
+  width: 75%;
+}
+
+#audio-player audio::-webkit-media-controls-panel {
+  background-color: coral;
 }
