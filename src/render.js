@@ -53,9 +53,14 @@ searchButton.onclick = () => {
 //DOWNLOAD FROM YOUTUBE FUNCTIONALITY
 
 function download(videoId, videoTitle) {
+
+    const treatedTitle = videoTitle.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+
+    console.log(treatedTitle);
+
     const downloadArgs = {
         videoId,
-        videoTitle
+        treatedTitle
     }
     window.api.download(downloadArgs).then(response => updatePlaylist());
 }
