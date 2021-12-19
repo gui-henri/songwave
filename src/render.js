@@ -1,8 +1,13 @@
+let playlist = [];
+let playingNow = "";
+let autoPlay = true;
+
 //INITIALIZE AND UPDATE PLAYLIST
 function updatePlaylist() {
     window.api.getMusics().then(musicList => {
 
-        console.log(musicList);
+        playlist.length = 0;
+        playlist = [...musicList]
 
         //grab the container
         let playlistContainer = document.getElementById('playlist-container');
@@ -16,6 +21,7 @@ function updatePlaylist() {
         });
 
         //for each music in the playlist
+
         musicList.forEach(music => {
 
             //will be created a div called 'music-in-playlist'
@@ -27,14 +33,15 @@ function updatePlaylist() {
 
             //then it will be populated with the following html:
             musicInPlaylistDiv.innerHTML = `
-                <h4>${music}</h4>
-                <img src="assets/play.svg" alt="play music">
+                <h4 onclick="play('${music}')">${music}</h4>
+                <img onclick="play('${music}')" src="assets/play.svg" alt="play music">
             `;
         })
     });
 }
 
 updatePlaylist();
+
 // MAIN WINDOW BUTTONS
 // Minimize
 let minimizeButton = document.getElementById('minimize');
@@ -103,4 +110,38 @@ function download(videoId, videoTitle) {
         treatedTitle
     }
     window.api.download(downloadArgs).then(response => updatePlaylist());
+}
+
+// PLAY MUSIC 
+
+function play(musicName) {
+
+    console.log(musicName);
+
+    audioPlayer = document.getElementById('audio-player-tag');
+    window.api.getMusicsPath().then(path => {
+        audioPlayer.src = `${path}/${musicName}`;
+        audioPlayer.play();
+        playingNow = musicName;
+    }) 
+}
+
+function shouldPlayNext() {
+    if (autoPlay) {
+        return true;
+    }
+    return false;
+}
+
+function playNext() {
+    if (shouldPlayNext()) {
+
+        audioPlayer = document.getElementById('audio-player-tag');
+
+        const atualMusicIndex = playlist.indexOf(playingNow);
+        const nextMusicIndex = atualMusicIndex + 1;
+
+        play(playlist[nextMusicIndex]);
+
+    }
 }

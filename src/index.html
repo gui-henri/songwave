@@ -13,7 +13,7 @@
               <h1>SONGWAVE</h1>
           </div>
           <div id="search-bar">
-              <input type="text" name="text-area" id="text-area">
+              <input type="text" name="text-area" id="text-area" placeholder="Search for musics">
               <img src="assets/magnify.svg" alt="Search Button" id="search-button">
           </div>
       </div>
@@ -26,11 +26,11 @@
       <div id="search-result-container">
       </div>  
       <div id="playlist-container">
-          <h3>Playlist</h3>
+        <h3>Playlist</h3>
       </div>
     </div>
     <div id="audio-player">
-      <audio src="../.cache/Coldplay - The Hardest Part (Official Video).mp4" controls></audio>
+      <audio src="../.cache/Coldplay - The Hardest Part (Official Video).mp4" controls id="audio-player-tag" onended="playNext()"></audio>
     </div>
   </body>
 </html>

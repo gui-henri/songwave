@@ -26,9 +26,6 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 function initialize() {
@@ -91,3 +88,7 @@ ipcMain.handle('getMusics', (event, args) => {
   const musicList = fs.readdirSync('./.cache/');
   return musicList;
 });
+
+ipcMain.handle('getMusicsPath', (event, args) => {
+  return path.join(__dirname, '.cache/')
+})
