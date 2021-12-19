@@ -90,5 +90,5 @@ ipcMain.handle('getMusics', (event, args) => {
 });
 
 ipcMain.handle('getMusicsPath', (event, args) => {
-  return path.join(__dirname, '.cache/')
+  return path.join(__dirname, '.cache')
 })
