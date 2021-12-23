@@ -90,5 +90,6 @@ ipcMain.handle('getMusics', (event, args) => {
 });
 
 ipcMain.handle('getMusicsPath', (event, args) => {
-  return path.join(__dirname, '.cache')
+  const exeDir = app.getPath('exe');
+  return path.join(path.dirname(exeDir), '.cache')
 })
